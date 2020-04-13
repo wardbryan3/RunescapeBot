@@ -79,26 +79,26 @@ function findTree() {
 
     var tree_colors =["876436","5b4324","785830"];
     for(var i = 0; i < 10000; i++) {
-            var random_x = getRandomInt(0, width-1);
-            var random_y = getRandomInt(0, height-1);
-            var sample_color = img.colorAt(random_x,random_y);
+        var random_x = getRandomInt(0, width-1);
+        var random_y = getRandomInt(0, height-1);
+        var sample_color = img.colorAt(random_x,random_y);
 
-            if(tree_colors.includes(sample_color)){
-                var screen_x = random_x + x;
-                var screen_y  = random_y + y;
+        if(tree_colors.includes(sample_color)){
+            var screen_x = random_x + x;
+            var screen_y  = random_y + y;
 
 
-                if(confirmTree(screen_x,screen_y)){
-                    console.log("Found tree at" + screen_x + ", " + screen_y + "color= " + sample_color);
-                    return {x: screen_x,
-                        y: screen_y
-                    }
-
-                }else {
-                    console.log("Unconfirmed tree at" + screen_x + ", " + screen_y + "color= " + sample_color);
+            if(confirmTree(screen_x,screen_y)){
+                console.log("Found tree at" + screen_x + ", " + screen_y + "color= " + sample_color);
+                return {x: screen_x,
+                    y: screen_y
                 }
 
+            }else {
+                console.log("Unconfirmed tree at" + screen_x + ", " + screen_y + "color= " + sample_color);
             }
+
+        }
     }
     // did not find a tree_color in our screenshot;
     return false;
@@ -125,13 +125,13 @@ function confirmTree(screen_x,screen_y){
     var x = 161, y = 31, width = 7,height = 8;
     var img = robot.screen.capture(x,y,width,height);
 
-            var helpTextColor = robot.getPixelColor(167,34);
-            console.log("found help text color: " + helpTextColor);
-            if( desiredHelpTextColors.includes(helpTextColor)){
-                return true;
+    var helpTextColor = robot.getPixelColor(167,34);
+    console.log("found help text color: " + helpTextColor);
+    if( desiredHelpTextColors.includes(helpTextColor)){
+        return true;
 
 
-        }
+    }
 
 }
 
@@ -145,28 +145,28 @@ function createArrayOfHelpHex(){
     let desiredHelpTextColors = []
     //creating a range of hex
 
-        for (var r = 0; r <= 25; r++) {
-            componentToHex(r);
-            //console.log(r);
+    for (var r = 0; r <= 25; r++) {
+        componentToHex(r);
+        //console.log(r);
 
-            for(var g=190;g <=255;g++){
-                componentToHex(g);
-                //console.log(g);
+        for(var g=190;g <=255;g++){
+            componentToHex(g);
+            //console.log(g);
 
-                for(var b=190;b <=255;b++){
-                    componentToHex(b);
-                    //console.log(b);
+            for(var b=190;b <=255;b++){
+                componentToHex(b);
+                //console.log(b);
 
-                    desiredHelpTextColors.push(rgbToHex(r, g, b,))
-                }
+                desiredHelpTextColors.push(rgbToHex(r, g, b,))
+            }
         }
 
-        }
-        //console.dir(desiredHelpTextColors, {'maxArrayLength': null});
-        //fs.writeFile("hugearray.txt", desiredHelpTextColors, function (err) {
+    }
+    //console.dir(desiredHelpTextColors, {'maxArrayLength': null});
+    //fs.writeFile("hugearray.txt", desiredHelpTextColors, function (err) {
 
     //});
-        return desiredHelpTextColors;
+    return desiredHelpTextColors;
 
 
 }
