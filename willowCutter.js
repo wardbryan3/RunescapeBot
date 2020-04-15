@@ -1,11 +1,10 @@
-const robot = require('robotjs');
-const fs = require('fs');
-const botting = require('./bottingModule/bottingModule');
+const robot = require('./node_modules/robotjs');
+let botting = require('./bottingModule/bottingModule');
 
 robot.setMouseDelay(300);
 
 
-function main(){
+function main() {
     console.log("Starting...");
     botting.sleep(4000);
 
@@ -30,7 +29,6 @@ function main(){
 
         while (confirmPreviousTree(tree.x, tree.y)) {
 
-
             robot.moveMouseSmooth(tree.x, tree.y);
             robot.mouseClick();
 
@@ -48,10 +46,7 @@ function main(){
 
         }
 
-
-        //dropLogs();
-
-
+        botting.rotateCamera();
         timesLooped++;
 
     }
@@ -59,12 +54,12 @@ function main(){
 }
 
 
-function dropLogs(){
+function dropLogs() {
     var invenory_x = 1690;
     var inventory_y = 800;
     var inventory_log_color = "a58243"
 
-    var pixelColor = robot.getPixelColor(invenory_x,inventory_y);
+    var pixelColor = robot.getPixelColor(invenory_x, inventory_y);
     //console.log(pixelColor);
     var waitCycles = 0;
     var maxWaitCycles = 9;
@@ -91,30 +86,32 @@ function dropLogs(){
 
 
 function findTree() {
+    console.log("findtree called")
     const x = 800, y = 300, width = 700, height = 400;
     let img = robot.screen.capture(x, y, width, height);
 
-
-    const tree_colors = ["876436", "5b4324", "785830", "231a0d", "5e4526",/*light green*/"6f7d35"];
+    const tree_colors = ["2a2614", "4f4829", "3e391f", "4c4527", "423b21", "494224"];
     for (let i = 0; i < 10000; i++) {
         let random_x = botting.getRandomInt(0, width - 1);
         let random_y = botting.getRandomInt(0, height - 1);
-        let sample_color = img.colorAt(random_x, random_y);
+        let sampleColor = img.colorAt(random_x, random_y);
 
-        if (tree_colors.includes(sample_color)) {
+
+        if (tree_colors.includes(sampleColor)) {
             let screen_x = random_x + x;
             let screen_y = random_y + y;
 
+            robot.moveMouseSmooth(screen_x, screen_y)
 
             if (confirmTree(screen_x, screen_y)) {
-                console.log("Found tree at" + screen_x + ", " + screen_y);
+                console.log("Found tree at: " + screen_x + ", " + screen_y);
                 return {
                     x: screen_x,
                     y: screen_y
                 }
 
             } else {
-                //console.log("Unconfirmed tree at" + screen_x + ", " + screen_y + "color= " + sample_color);
+                //console.log("Unconfirmed tree at" + screen_x + ", " + screen_y + "color= " + sampleColor);
             }
 
         }
@@ -137,7 +134,7 @@ function confirmPreviousTree(screen_x, screen_y) {
 
     let numberOfBluePixels = botting.countNumberOfBluePixels();
 
-    return numberOfBluePixels >= 51 && numberOfBluePixels <= 69;
+    return numberOfBluePixels >= 84 && numberOfBluePixels <= 105;
 
 
 }
@@ -155,7 +152,7 @@ function confirmTree(screen_x, screen_y) {
 
 
     let numberOfBluePixels = botting.countNumberOfBluePixels();
-    return numberOfBluePixels >= 51 && numberOfBluePixels <= 69;
+    return numberOfBluePixels >= 84 && numberOfBluePixels <= 105;
 
 }
 
@@ -195,14 +192,14 @@ function goToBank() {
     deposit();
 
     //leave bank
-    robot.moveMouseSmooth(1836, 103);
+    robot.moveMouseSmooth(1780, 152);
     botting.sleep(30);
     robot.mouseClick();
-    botting.sleep(5000);
+
     robot.keyToggle("down", "down");
     botting.sleep(3500 + botting.getRandomInt(0, 500));
     robot.keyToggle('down', 'up');
-
+    botting.sleep(5000);
 }
 
 function deposit() {
@@ -256,7 +253,7 @@ function deposit() {
     }
 
 
-    botting.sleep(3000)
+    botting.sleep(5000)
     console.log("depositing");
     //then deposit all except for the last  item in inventory
     robot.moveMouseSmooth(928, 516);
