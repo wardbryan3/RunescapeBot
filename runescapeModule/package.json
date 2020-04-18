@@ -1,19 +1,14 @@
 {
-  "name": "bottingmodule",
+  "name": "runescapemodule",
   "version": "1.0.0",
-  "description": "A collection of function that may bbe reused throughout my runescape bot project(s)",
-  "main": "",
+  "description": "A\tcollectiion of variaiable and functions that t I feel are very runescape specific",
+  "main": "runescapeModule.js",
   "scripts": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wardbryan3/RunescapeBot.git"
-  },
   "keywords": [
     "runescape",
-    "bot",
-    "module"
+    "bot"
   ],
   "author": "wardbryan3",
   "license": "ISC",
